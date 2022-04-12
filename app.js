@@ -90,4 +90,5 @@ if(!process.env.PROD){
 
 module.exports = app;
 
-// docker run --name=baas-parse-server -e MONGO_USERNAME=admin -e MONGO_PASSWORD=admin -e MONGO_HOST=172.21.240.1 baas-parse-server
+// docker run --name=baas-parse-server -v C:\DockerVault\parse:/usr/src/parse-server -e CLOUD_CODE_MAIN='./cloud/main.js' -e MONGO_USERNAME=admin -e MONGO_PASSWORD=admin -e MONGO_HOST=172.21.240.1 baas-parse-server
+// docker build -t baas-parse-server .

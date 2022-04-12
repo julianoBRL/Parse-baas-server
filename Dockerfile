@@ -2,21 +2,22 @@ FROM node:12-alpine AS BUILD_IMAGE
 
 LABEL maintainer="juliano0forum@gmail.com"
 
-# couchbase sdk requirements
-# RUN apk update && apk add python make g++ && rm -rf /var/cache/apk/*
+WORKDIR /usr/src/parse-server
+COPY app.js /usr/src/parse-server
+COPY package*.json /usr/src/parse-server
+COPY yarn.lock /usr/src/parse-server
+COPY ./client /usr/src/parse-server/client
+COPY ./cloud /usr/src/parse-server/cloud
 
-WORKDIR /usr/src/parse-server/build
-COPY package*.json ./
-COPY app.js ./
-
-RUN npm install
+RUN yarn install
 
 FROM node:12-alpine
 
 WORKDIR /usr/src/parse-server
 
-# copy from build image
-COPY --from=BUILD_IMAGE /usr/src/parse-server/build ./
+VOLUME [ "/usr/src/parse-server" ]
+
+COPY --from=BUILD_IMAGE /usr/src/parse-server ./
 
 EXPOSE 1337
 
