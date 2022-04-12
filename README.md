@@ -21,7 +21,7 @@ Parse - backend as a service using nodejs
 |MONGO_PASSWORD|''|Mongo password|
 |MONGO_HOST|'localhost'| Mongo host |
 |CLOUD_CODE_MAIN|''| Where the CloudCode will look for cloud functions/jobs |
-|APP_ID|'parse'| App id(will appers on mongo) |
+|APP_ID|'parse'| App id (will appers on mongo) |
 |REST_API_KEY|'restapikey'| Key for rest/crud functions |
 |JS_KEY|'jskey'| Javascriptkey used on cloud functions, livequery and graphql |
 |SERVER_HOST|'localhost'| Server host |
@@ -34,7 +34,7 @@ Parse - backend as a service using nodejs
 
 <hr>
 
-### Build&Run
+### Build&Run&Pull
 
 ```
 docker build -t baas-parse-server .
@@ -42,7 +42,11 @@ docker build -t baas-parse-server .
 
 
 ```
-docker run --name=baas-parse-server -e CLOUD_CODE_MAIN='./cloud/main.js' -p 1337:1337 baas-parse-server
+docker run --name=baas-parse-server --link mongodb -e CLOUD_CODE_MAIN='./cloud/main.js' -p 1337:1337 baas-parse-server
+```
+
+```
+docker pull wdgaster/baas-parse-server
 ```
 
 Storage docker folder: /usr/src/parse-server
@@ -56,3 +60,10 @@ REST API running on http://localhost:1337/parse<br>
 Dashboard running on http://localhost:1337/dashboard<br>
 GraphQL API running on http://localhost:1337/graphql<br>
 GraphQL Playground running on http://localhost:1337/playground<br>
+
+<hr>
+
+### Contributing
+
+Author: <b> (JulianoBRL/WDGaster) Juliano Lira </b><br>
+Github: https://github.com/julianoBRL/Parse-baas-server
