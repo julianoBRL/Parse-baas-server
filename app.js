@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const { default: ParseServer, ParseGraphQLServer } = require('parse-server');
+const { default: ParseServer, ParseGraphQLServer, LiveQueryServer } = require('parse-server');
 const ParseDashboard = require("parse-dashboard");
 
 const app = express();
@@ -27,7 +27,11 @@ var api = new ParseServer({
   restAPIKey: process.env.REST_API_KEY,
   javascriptKey: process.env.JS_KEY,
   serverURL: `${server_url}/parse`,
-  masterKey: process.env.MASTER_KEY
+  masterKey: process.env.MASTER_KEY,
+  startLiveQueryServer: true,
+  liveQuery: {
+    classNames: ['Message']
+  }
 });
 
 
@@ -71,15 +75,18 @@ if(!process.env.PROD){
 app.use("/parse", api.app);
 app.use("/dashboard", dashboard);
 
-app.listen(process.env.PORT, function() {
-  console.log("Prodction: "+process.env.PROD)
-  console.log('REST API running on http://localhost:'+process.env.PORT+'/parse');
-  console.log('Dashboard running on http://localhost:'+process.env.PORT+'/dashboard');
-  console.log('GraphQL API running on http://localhost:'+process.env.PORT+'/graphql');
-  if(!process.env.PROD){
-    console.log('GraphQL Playground running on http://localhost:'+process.env.PORT+'/playground');
-  }
-});
+let httpServer = require('http').createServer(app);
+httpServer.listen(process.env.PORT);
+
+ParseServer.createLiveQueryServer(httpServer);
+
+console.log("Prodction: "+process.env.PROD)
+console.log('REST API running on http://localhost:'+process.env.PORT+'/parse');
+console.log('Dashboard running on http://localhost:'+process.env.PORT+'/dashboard');
+console.log('GraphQL API running on http://localhost:'+process.env.PORT+'/graphql');
+if(!process.env.PROD){
+  console.log('GraphQL Playground running on http://localhost:'+process.env.PORT+'/playground');
+}
 
 module.exports = app;
 
