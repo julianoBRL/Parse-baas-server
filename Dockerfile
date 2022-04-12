@@ -1,8 +1,22 @@
-FROM node:latest
-WORKDIR /usr/src/parse-server
+FROM node:12-alpine AS BUILD_IMAGE
+
+LABEL maintainer="juliano0forum@gmail.com"
+
+# couchbase sdk requirements
+# RUN apk update && apk add python make g++ && rm -rf /var/cache/apk/*
+
+WORKDIR /usr/src/parse-server/build
 COPY package*.json ./
 COPY app.js ./
+
 RUN npm install
+
+FROM node:12-alpine
+
+WORKDIR /usr/src/parse-server
+
+# copy from build image
+COPY --from=BUILD_IMAGE /usr/src/parse-server/build ./
 
 EXPOSE 1337
 

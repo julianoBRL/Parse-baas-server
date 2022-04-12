@@ -7,11 +7,21 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
-    "dotenv": "^16.0.0",
     "express": "~4.16.1",
+    "graphql": "^16.3.0",
     "jade": "^1.11.0",
     "morgan": "~1.9.1",
     "parse-dashboard": "^4.1.0",
-    "parse-server": "^5.2.0"
+    "parse-server": "^5.2.0",
+    "dotenv": "^16.0.0"
+  },
+  "resolutions": {
+    "graphql": "16.3.0",
+    "**/graphql": "16.3.0"
+  },
+  "author": {
+    "name": "(JulianoBRL) Juliano Lira",
+    "email": "Shintaro0dev@gmail.com",
+    "url": "https://github.com/julianoBRL"
   }
 }
