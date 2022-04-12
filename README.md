@@ -66,5 +66,5 @@ GraphQL Playground running on http://localhost:1337/playground<br>
 ### Contributing
 
 Author: <b> (JulianoBRL/WDGaster) Juliano Lira </b><br>
-Github: https://github.com/julianoBRL/Parse-baas-server
+Github: https://github.com/julianoBRL/Parse-baas-server<br>
 Docker: https://hub.docker.com/r/wdgaster/baas-parse-server
