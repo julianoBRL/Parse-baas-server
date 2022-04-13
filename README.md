@@ -31,6 +31,11 @@ Parse - backend as a service using nodejs
 |ADMIN_PASSWORD|"admin"| Server admin password |
 |PORT|1337| Server port |
 |PROD|false| Production mode|
+|CLIENT_KEY|"clientkey"| Client key, used to connect on flutter,expo, etc...|
+|PUSH_ANDROID_KEY|""|Server key from firebase |
+|PUSH_IOS_PFX|""| pfx file location|
+|PUSH_IOS_PASSPHRASE|""| ios pfx passphrase|
+|PUSH_IOS_BUNDLEID|""| IOS bundleid|
 
 <hr>
 

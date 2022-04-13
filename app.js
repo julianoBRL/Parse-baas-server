@@ -28,9 +28,21 @@ var api = new ParseServer({
   javascriptKey: process.env.JS_KEY,
   serverURL: `${server_url}/parse`,
   masterKey: process.env.MASTER_KEY,
+  clientKey: process.env.CLIENT_KEY,
   startLiveQueryServer: true,
   liveQuery: {
     classNames: ['Message']
+  },
+  push: {
+    android: {
+      apiKey: process.env.PUSH_ANDROID_KEY
+    },
+    ios: {
+      pfx: process.env.PUSH_IOS_PFX,
+      passphrase: process.env.PUSH_IOS_PASSPHRASE,
+      bundleId: process.env.PUSH_IOS_BUNDLEID,
+      production: process.env.PROD
+    }
   }
 });
 
@@ -89,6 +101,3 @@ if(!process.env.PROD){
 }
 
 module.exports = app;
-
-// docker run --name=baas-parse-server -v C:\DockerVault\parse:/usr/src/parse-server -e CLOUD_CODE_MAIN='./cloud/main.js' -e MONGO_USERNAME=admin -e MONGO_PASSWORD=admin -e MONGO_HOST=172.21.240.1 baas-parse-server
-// docker build -t baas-parse-server .
