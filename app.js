@@ -33,17 +33,6 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ['Message']
   },
-  push: {
-    android: {
-      apiKey: process.env.PUSH_ANDROID_KEY
-    },
-    ios: {
-      pfx: process.env.PUSH_IOS_PFX,
-      passphrase: process.env.PUSH_IOS_PASSPHRASE,
-      bundleId: process.env.PUSH_IOS_BUNDLEID,
-      production: process.env.PROD
-    }
-  }
 });
 
 
