@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const { default: ParseServer, ParseGraphQLServer, LiveQueryServer } = require('parse-server');
+const {default: ParseServer, ParseGraphQLServer} = require('parse-server');
 const ParseDashboard = require("parse-dashboard");
 
 const app = express();
@@ -18,10 +18,9 @@ app.use(cookieParser());
 app.use(express.static("public", { maxAge: 31557600000 }));
 
 const server_url = `http://${process.env.SERVER_HOST}:${process.env.PORT}`
-const mongo_url = `mongodb://${process.env.MONGO_USERNAME }:${process.env.MONGO_PASSWORD }@${process.env.MONGO_HOST }`
 
 var api = new ParseServer({
-  databaseURI:mongo_url,
+  databaseURI: process.env.MONGO_URL,
   cloud: process.env.CLOUD_CODE_MAIN,
   appId: process.env.APP_ID,
   restAPIKey: process.env.REST_API_KEY,
@@ -31,37 +30,28 @@ var api = new ParseServer({
   clientKey: process.env.CLIENT_KEY,
   startLiveQueryServer: true,
   liveQuery: {
-    classNames: ['Message']
-  },
+    classNames: ["LiveQuery"]//(process.env.LIVE_QUERY_NAMES)? process.env.LIVE_QUERY_NAMES.split(",") : []
+  }
 });
 
 
-var dashboard = new ParseDashboard(
-  {
-    apps: [
-      {
-        serverURL: `${server_url}/parse`,
-        appId: process.env.APP_ID,
-        masterKey: process.env.MASTER_KEY,
-        appName: process.env.APP_NAME,
-        graphQLServerURL: `${server_url}/graphql`
-      }
-    ],
-    users: [
-      {
-        user: process.env.ADMIN_USERNAME,
-        pass: process.env.ADMIN_PASSWORD
-      }
-    ]
-  },
-  { allowInsecureHTTP: true }
+var dashboard = new ParseDashboard({
+    apps: [{
+      serverURL: `${server_url}/parse`,
+      appId: process.env.APP_ID,
+      masterKey: process.env.MASTER_KEY,
+      appName: process.env.APP_NAME,
+      graphQLServerURL: `${server_url}/graphql`
+    }],
+    users: [{
+      user: process.env.ADMIN_USERNAME,
+      pass: process.env.ADMIN_PASSWORD
+    }]
+  },{ allowInsecureHTTP: true }
 );
 
-
 const parseGraphQLServer = new ParseGraphQLServer(
-  api,
-  {
-    
+  api,{
     graphQLPath: '/graphql',
     playgroundPath: '/graphql-playground'
   }

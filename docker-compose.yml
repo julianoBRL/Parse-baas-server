@@ -1,0 +1,34 @@
+version: "3.0"
+
+services:
+  server:
+    build: .
+    container_name: Parse
+    environment:
+      - MONGO_URL=mongodb://admin:admin@database
+      - CLOUD_CODE_MAIN=cloud/main.js
+      - APP_ID=parse
+      - APP_NAME=parse-app
+      - SERVER_HOST=localhost
+      - PORT=1337
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin
+      - JS_KEY=jskey
+      - CLIENT_KEY=clientkey
+      - MASTER_KEY=masterkey
+      - REST_API_KEY=restapikey
+      - PROD=false
+    ports:
+      - "1337:1337"
+    links:
+      - "database:database"
+  database:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017-27019:27017-27019"
+    environment:
+      - MONGO_INITDB_DATABASE=baas
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+  
