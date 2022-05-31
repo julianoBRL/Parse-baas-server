@@ -36,6 +36,7 @@ Parse - backend as a service using nodejs
 |PUSH_IOS_PFX|""| pfx file location|
 |PUSH_IOS_PASSPHRASE|""| ios pfx passphrase|
 |PUSH_IOS_BUNDLEID|""| IOS bundleid|
+|LIVE_QUERY_NAMES|""| List separeted by "," of active live querys |
 
 <hr>
 

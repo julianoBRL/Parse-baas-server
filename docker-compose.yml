@@ -26,7 +26,7 @@ services:
     links:
       - "database:database"
     volumes:
-      - parse_data:/usr/src/parse-server:ro
+      - parse_data:/usr/src/parse-server
 
   database:
     image: mongo
@@ -39,6 +39,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=admin
     volumes:
       - mongo_data:/data/db
+      - mongo_config:/data/configdb
 
 volumes:
   mongo_data:
@@ -47,11 +48,18 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: 'C:/DockerVault/mongodb'
+      device: 'C:/DockerVault/BaseSystem/mongodb'
+  mongo_config:
+    name: mongo_config
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:/DockerVault/BaseSystem/mongodb_config'
   parse_data:
     name: parse_data
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: 'C:/DockerVault/parse'
+      device: 'C:/DockerVault/BaseSystem/parse'
