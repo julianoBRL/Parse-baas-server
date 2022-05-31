@@ -1,6 +1,7 @@
 version: "3.0"
 
 services:
+
   server:
     build: .
     container_name: Parse
@@ -20,8 +21,13 @@ services:
       - PROD=false
     ports:
       - "1337:1337"
+    depends_on:
+      - "database"
     links:
       - "database:database"
+    volumes:
+      - parse_data:/usr/src/parse-server:ro
+
   database:
     image: mongo
     container_name: mongodb
@@ -31,4 +37,21 @@ services:
       - MONGO_INITDB_DATABASE=baas
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
-  
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+    name: mongo_data
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:/DockerVault/mongodb'
+  parse_data:
+    name: parse_data
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:/DockerVault/parse'

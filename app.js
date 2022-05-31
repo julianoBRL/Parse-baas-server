@@ -19,6 +19,11 @@ app.use(express.static("public", { maxAge: 31557600000 }));
 
 const server_url = `http://${process.env.SERVER_HOST}:${process.env.PORT}`
 
+var liveQueryNames = []
+if(process.env.LIVE_QUERY_NAMES){
+  liveQueryNames=process.env.LIVE_QUERY_NAMES.split(",")
+}
+
 var api = new ParseServer({
   databaseURI: process.env.MONGO_URL,
   cloud: process.env.CLOUD_CODE_MAIN,
@@ -30,7 +35,7 @@ var api = new ParseServer({
   clientKey: process.env.CLIENT_KEY,
   startLiveQueryServer: true,
   liveQuery: {
-    classNames: ["LiveQuery"]//(process.env.LIVE_QUERY_NAMES)? process.env.LIVE_QUERY_NAMES.split(",") : []
+    classNames: liveQueryNames
   }
 });
 
